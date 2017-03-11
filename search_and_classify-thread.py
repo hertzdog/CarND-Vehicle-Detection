@@ -41,7 +41,7 @@ hog_feat = data['hog_feat']
 ystart = 400
 ystop = 660
 y_start_stop = [ystart, ystop] # Min and max in y to search in slide_window()
-frames_per_hot_boxes=6
+frames_per_hot_boxes=15
 hot_box_list_history=[]
 number_of_boxes = []
 
@@ -58,6 +58,7 @@ def process_image(image):
                             hog_channel=hog_channel, spatial_feat=spatial_feat,
                             hist_feat=hist_feat, hog_feat=hog_feat)
         hot_box_list = hot_box_list + hot_windows
+
     #print ("Hot boxes in current frame: ", len(hot_box_list))
     heat = np.zeros_like(image[:,:,0]).astype(np.float)
 
@@ -79,14 +80,17 @@ def process_image(image):
     heat = add_heat(heat,hot_box_list_history)
 
     # Apply threshold to help remove false positives
-    heat = apply_threshold(heat,3)
+    heat = apply_threshold(heat,2)
 
     # Visualize the heatmap when displaying
     heatmap = np.clip(heat, 0, 255)
 
     # Find final boxes from heatmap using label function
     labels = label(heatmap)
-    draw_img = draw_labeled_bboxes(np.copy(image), labels)
+
+    draw_img = draw_boxes(np.copy(image), hot_box_list_history, color=(0, 0, 255), thick=3)
+    draw_img = draw_labeled_bboxes(draw_img, labels)
+
     return draw_img
 
 print('Processing the video...')
