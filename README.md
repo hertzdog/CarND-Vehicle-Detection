@@ -25,8 +25,8 @@ The training has been done in train_model.py: features have been normalized and 
 * Implement a sliding-window technique and use your trained classifier to search for vehicles in images.
 
 The sliding windows has been implemented, using windows of different sizes: 32, 64 and 128 and spanning only the image part where cars can be found, because of the different size of veichles on the road. The result has been passed in a heatmap and the final box was done by the label function.
-[image1]: ./output_images/figure_1_YCrCb.png
-[image2]: ./output_images/figure_2_YCrCb.png
+[image1]:https://github.com/hertzdog/CarND-Vehicle-Detection/blob/master/output_images/figure_1_YCrCb.png
+[image2]:https://github.com/hertzdog/CarND-Vehicle-Detection/blob/master/output_images/figure_2_YCrCb.png
 
 Even if test images seems good, the application on video was poor, especially for detecting the white car.
 
