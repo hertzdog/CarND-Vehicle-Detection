@@ -43,10 +43,14 @@ ystop = 660
 y_start_stop = [ystart, ystop] # Min and max in y to search in slide_window()
 frames_per_hot_boxes=15
 hot_box_list_history=[]
+labels_frame_history=[]
 number_of_boxes = []
+number_of_labels = []
 
 def process_image(image):
     hot_box_list = []
+
+
     for i in range(3):
         current_window=np.int(math.pow(2,(5+i)))
         windows = slide_window(image, x_start_stop=[None, None], y_start_stop=y_start_stop,
@@ -58,6 +62,21 @@ def process_image(image):
                             hog_channel=hog_channel, spatial_feat=spatial_feat,
                             hist_feat=hist_feat, hog_feat=hog_feat)
         hot_box_list = hot_box_list + hot_windows
+
+    frame_heat = np.zeros_like(image[:,:,0]).astype(np.float)
+    frame_heat = add_heat(frame_heat,hot_box_list)
+    frame_heat = apply_threshold(frame_heat,1)
+    frame_heatmap = np.clip(frame_heat, 0, 255)
+    frame_labels = label(frame_heatmap)
+    global number_of_labels
+    number_of_labels.append(len(frame_labels))
+    global labels_frame_history
+    labels_frame_history.append(frame_labels)
+
+    if len(number_of_labels) > frames_per_hot_boxes:
+        for counter in range(number_of_labels[0]):
+            labels_frame_history.pop(0)
+        number_of_labels.pop(0)
 
     #print ("Hot boxes in current frame: ", len(hot_box_list))
     heat = np.zeros_like(image[:,:,0]).astype(np.float)
@@ -77,7 +96,8 @@ def process_image(image):
     #print ("Total number of boxes of the last", frames_per_hot_boxes, "frames : ", len(hot_box_list_history))
     # Add heat to each box in box list
     #heat = add_heat(heat,hot_box_list)
-    heat = add_heat(heat,hot_box_list_history)
+    #heat = add_heat(heat,hot_box_list_history)
+    heat = add_heat(heat,labels_frame_history)
 
     # Apply threshold to help remove false positives
     heat = apply_threshold(heat,2)
@@ -88,7 +108,7 @@ def process_image(image):
     # Find final boxes from heatmap using label function
     labels = label(heatmap)
 
-    draw_img = draw_boxes(np.copy(image), hot_box_list_history, color=(0, 0, 255), thick=3)
+    draw_img = draw_boxes(np.copy(image), labels_frame_history, color=(0, 0, 255), thick=3)
     draw_img = draw_labeled_bboxes(draw_img, labels)
 
 
@@ -98,8 +118,8 @@ def process_image(image):
 print('Processing the video...')
 
 out_dir='./output_images/'
-input_file='project_video.mp4'
-#input_file='test_video.mp4'
+#input_file='project_video.mp4'
+input_file='test_video.mp4'
 output_file=out_dir+'processed_'+input_file
 
 clip = VideoFileClip(input_file)

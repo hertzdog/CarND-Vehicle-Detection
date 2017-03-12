@@ -37,7 +37,7 @@ cars = cars[0:sample_size]
 notcars = notcars[0:sample_size]
 
 
-color_space = 'YCrCb' # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
+color_space = 'HLS' # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
 orient = 9  # HOG orientations
 pix_per_cell = 8 # HOG pixels per cell
 cell_per_block = 2 # HOG cells per block
@@ -150,7 +150,7 @@ try:
                 'hist_bins': hist_bins,
                 'spatial_feat': spatial_feat,
                 'hist_feat': hist_feat,
-                'hog_feat': hog_feat                
+                'hog_feat': hog_feat
             },
             pfile, pickle.HIGHEST_PROTOCOL)
 except Exception as e:
