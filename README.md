@@ -4,7 +4,7 @@ The Project
 ---
 The project is available at: https://github.com/hertzdog/CarND-Vehicle-Detection and is part of the Udacity Autonomous Veichle Driving Nano Degree course in which I am involved in.
 
-The final movie is here: 
+The final movie is here: https://github.com/hertzdog/CarND-Vehicle-Detection/blob/master/output_images/processed_project_video_yolo_0.3_heatmap.mp4
 
 The goals / steps of this project are the following:
 

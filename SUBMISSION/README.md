@@ -4,6 +4,8 @@ The Project
 ---
 The project is available at: https://github.com/hertzdog/CarND-Vehicle-Detection and is part of the Udacity Autonomous Veichle Driving Nano Degree course in which I am involved in.
 
+The final movie is here: https://github.com/hertzdog/CarND-Vehicle-Detection/blob/master/output_images/processed_project_video_yolo_0.3_heatmap.mp4
+
 The goals / steps of this project are the following:
 
 * Perform a Histogram of Oriented Gradients (HOG) feature extraction on a labeled training set of images and train a classifier Linear SVM classifier
@@ -38,14 +40,12 @@ Working on video, the following change was made:
 
 * Estimate a bounding box for vehicles detected.
 
-In the output directory there are many videos on which i did tests. [video](./output_images/YCrCb_processed_project_video_YCrCb_15_2.mp4)
+In the output directory there are many videos on which I did tests. [video](./output_images/YCrCb_processed_project_video_YCrCb_15_2.mp4)
+
+
 
 The video shows the boxes detected in the frame (blue line) and the result of the heatmpab and labeling.
 Even if I tested a lot of color combination, thresholds, frames I was not satisfied.
-The python script used was: "search_and_classify-azure-6-2.py" I run it on an Azure instance.
-
-## Improving
-
 
 Then I decided to apply the [Darknet Yolo Project](https://pjreddie.com/darknet/yolo/).
 I found a TensorFlow implementation of it.
@@ -53,4 +53,4 @@ Starting from there I designed an algorithm for detecting cars using the Convolu
 
 For running the project I had to create a new Conda Environment with TensorFlow 1.0 and all related packages. At the end I was very excited about this final project: I started following the guidelines provided, exploring color-spaces, and at the end I was able to create a new conda Environment and succesfully using a very fast algroithm on my project!
 
-Here is my final project on github (https://github.com/hertzdog/darkflow) which was used for generating the video output.
+Here is my final project on github (https://github.com/hertzdog/darkflow) which was used for generating the video otput.
